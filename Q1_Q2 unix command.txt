@@ -1,0 +1,33 @@
+$ export PATH=~/miniconda3/bin:$PATH  
+
+$ source activate bioinfo
+
+$ bowtie2-build sample/mecA.fa sample/index
+
+$ bowtie2 -x ~/miniconda3/sample/index -1 sample0.1.fastq  -2 sample0.2.fastq > sample0.sam
+$ bowtie2 -x ~/miniconda3/sample/index -1 sample1.1.fastq  -2 sample1.2.fastq > sample1.sam
+$ bowtie2 -x ~/miniconda3/sample/index -1 sample2.1.fastq  -2 sample2.2.fastq > sample2.sam
+$ bowtie2 -x ~/miniconda3/sample/index -1 sample3.1.fastq  -2 sample3.2.fastq > sample3.sam
+
+$ samtools view -bS sample0.sam > sample0.bam
+$ samtools view -bS sample1.sam > sample1.bam
+$ samtools view -bS sample2.sam > sample2.bam
+$ samtools view -bS sample3.sam > sample3.bam
+
+$ bedtools genomecov -ibam sample0.bam -bg > sample0.bedgraph
+$ bedtools genomecov -ibam sample1.bam -bg > sample1.bedgraph
+$ bedtools genomecov -ibam sample2.bam -bg > sample2.bedgraph
+$ bedtools genomecov -ibam sample3.bam -bg > sample3.bedgraph
+
+OR -----Automated Script-----------------------------------------------------------------------------------------------------------------------------------
+
+#! /usr/bin/env bash
+for filename in  sample*.1.fastq 
+  do
+   file=${filename:0:7} 
+   bowtie2 -x ~/miniconda3/sample/index -1 "$file.1.fastq" -2 "$file.2.fastq"  > "$file".sam 
+   samtools view -bS "$file".sam > "$file".bam
+   bedtools genomecov -ibam "$file".bam -bg > "$file".bedgraph 
+   echo "$filename","$file.2.fastq"
+   echo "$file"
+  done;
