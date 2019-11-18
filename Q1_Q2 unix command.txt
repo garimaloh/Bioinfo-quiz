@@ -1,8 +1,10 @@
 $ export PATH=~/miniconda3/bin:$PATH  
 
 $ source activate bioinfo
-
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin
 $ bowtie2-build sample/mecA.fa sample/index
+
+$ ln -s /home/glohani/miniconda3/sample/sample0.1.fastq sym/sample04.fastq
 
 $ bowtie2 -x ~/miniconda3/sample/index -1 sample0.1.fastq  -2 sample0.2.fastq > sample0.sam
 $ bowtie2 -x ~/miniconda3/sample/index -1 sample1.1.fastq  -2 sample1.2.fastq > sample1.sam
@@ -19,6 +21,10 @@ $ bedtools genomecov -ibam sample1.bam -bg > sample1.bedgraph
 $ bedtools genomecov -ibam sample2.bam -bg > sample2.bedgraph
 $ bedtools genomecov -ibam sample3.bam -bg > sample3.bedgraph
 
+
+to view pdf from unix subsytem
+$ cmd.exe
+cd C:\Users\GARIMA\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs\home\glohani\miniconda3\sample\start sample3.pdf
 OR -----Automated Script-----------------------------------------------------------------------------------------------------------------------------------
 
 #! /usr/bin/env bash
